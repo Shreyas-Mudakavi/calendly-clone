@@ -10,9 +10,12 @@ import {
 } from "@/components/ui/card";
 import { db } from "@/drizzle/db";
 import { formatEventDescription } from "@/lib/formatters";
+import { cn } from "@/lib/utils";
 import { auth } from "@clerk/nextjs/server";
 import { CalendarPlus, CalendarRange } from "lucide-react";
 import Link from "next/link";
+
+export const revalidate = 0;
 
 export default async function EventsPage() {
   const { userId, redirectToSignIn } = auth();
@@ -81,8 +84,8 @@ function EventCard({
   clerkUserId,
 }: EventCardProps) {
   return (
-    <Card className="flex flex-col">
-      <CardHeader>
+    <Card className={cn("flex flex-col", !isActive && "border-secondary/50")}>
+      <CardHeader className={cn(!isActive && "opacity-50")}>
         <CardTitle>{name}</CardTitle>
 
         <CardDescription>
@@ -90,7 +93,11 @@ function EventCard({
         </CardDescription>
       </CardHeader>
 
-      {description != null && <CardContent>{description}</CardContent>}
+      {description != null && (
+        <CardContent className={cn(!isActive && "opacity-50")}>
+          {description}
+        </CardContent>
+      )}
 
       <CardFooter className="flex justify-end gap-2 mt-auto">
         <CopyEventButton
