@@ -2,7 +2,12 @@ import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
 // createRouteMatcher() will take an array of all the routes we want it to be public.
 // /sign-in(.*) -> this ensures to match anything that starts with sign-in
-const isPublicRoute = createRouteMatcher(["/", "/sign-in(.*)", "/sign-up(.*)"]);
+const isPublicRoute = createRouteMatcher([
+  "/",
+  "/sign-in(.*)",
+  "/sign-up(.*)",
+  "/book(.*)",
+]);
 
 // this clerk middleware takes a function which gives us all the auth information as well as all
 // the information related to request. We can auth().protect() that will essentially make it that so
